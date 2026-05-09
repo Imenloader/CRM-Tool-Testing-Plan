@@ -231,9 +231,9 @@ function App() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <StatCard icon={<Users className="text-blue-500" />} label="Total Leads" value={stats.total} />
           <StatCard icon={<UserCheck className="text-emerald-500" />} label="Purchased" value={stats.purchased} />
-          <StatCard icon={<DollarSign className="text-indigo-500" />} label="Revenue" value={`$${stats.revenue.toLocaleString()}`} />
+          <StatCard icon={<DollarSign className="text-indigo-500" />} label="Revenue" value={`${stats.revenue.toLocaleString()} ج.م`} />
           <StatCard icon={<BarChart3 className="text-amber-500" />} label="Conv. Rate" value={`${stats.conversionRate}%`} />
-          <StatCard icon={<TrendingUp className="text-rose-500" />} label="Avg. Value" value={`$${stats.avgValue}`} />
+          <StatCard icon={<TrendingUp className="text-rose-500" />} label="Avg. Value" value={`${stats.avgValue} ج.م`} />
         </div>
 
         {/* Add Lead Form */}
@@ -280,7 +280,7 @@ function App() {
             {formData.status === 'Purchased' ? (
               <>
                 <div className="lg:col-span-1">
-                  <label className="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Value ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Value (ج.م)</label>
                   <input 
                     type="number" name="value" value={formData.value} onChange={handleInputChange}
                     placeholder="0.00" className="input-field"
@@ -372,7 +372,7 @@ function App() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="font-mono font-bold text-slate-900">
-                          {lead.status === 'Purchased' ? `$${parseFloat(lead.value).toLocaleString()}` : '-'}
+                          {lead.status === 'Purchased' ? `${parseFloat(lead.value).toLocaleString()} ج.م` : '-'}
                         </div>
                       </td>
                       <td className="px-6 py-4">
