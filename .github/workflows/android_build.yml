@@ -34,6 +34,12 @@ jobs:
       - name: Capacitor Sync
         run: npx cap sync android
 
+      - name: Generate Self-Signed Keystore
+        run: |
+          keytool -genkeypair -v -keystore release.jks -keyalg RSA -keysize 2048 -validity 10000 \
+            -alias whatsapp_crm_key -storepass "123456" -keypass "123456" \
+            -dname "CN=WhatsApp CRM, OU=Ads, O=Business, L=Cairo, S=Cairo, C=EG"
+
       - name: Build with Gradle
         run: |
           cd android
@@ -45,10 +51,10 @@ jobs:
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: android/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          signingKey: ${{ github.workspace }}/release.jks
+          alias: whatsapp_crm_key
+          keyStorePassword: "123456"
+          keyPassword: "123456"
 
       - name: Upload Signed APK
         uses: actions/upload-artifact@v4
