@@ -34,11 +34,14 @@ jobs:
       - name: Capacitor Sync
         run: npx cap sync android
 
-      - name: Generate Self-Signed Keystore
+      - name: Generate and Print Keystore (ONE TIME SETUP)
         run: |
           keytool -genkeypair -v -keystore release.jks -keyalg RSA -keysize 2048 -validity 10000 \
             -alias whatsapp_crm_key -storepass "123456" -keypass "123456" \
             -dname "CN=WhatsApp CRM, OU=Ads, O=Business, L=Cairo, S=Cairo, C=EG"
+          echo "COPY THE FOLLOWING BASE64 STRING TO YOUR GITHUB SECRETS AS 'ANDROID_KEYSTORE_BASE64':"
+          base64 -w 0 release.jks
+          echo ""
 
       - name: Build with Gradle
         run: |
